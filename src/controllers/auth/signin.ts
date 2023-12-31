@@ -5,10 +5,14 @@ import { createSession, createTokens } from "../../services/auth";
 
 export const signin = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  const user = await UserModel.findOne({ email: email });
+  console.log(req.body);
+  const user = await UserModel.findOne({ email: email }).select(
+    "+loginRetries +isSuspended +verified +lastLogin +password"
+  );
   if (!user) {
     return res.status(404).json({ err: "User not found" });
   }
+  console.log(user.password);
   const isValidPassword = await user.verifyPassword(password);
 
   if (!isValidPassword) {
@@ -23,7 +27,7 @@ export const signin = async (req: Request, res: Response) => {
       .status(401)
       .json({ err: "Your email address is not yet verified" });
   }
-  if (!user.isSuspended) {
+  if (user.isSuspended) {
     return res.status(403).json({ err: "Your account has been suspended" });
   }
   const sessionId = await createSession(user._id, req.get("user-agent") || "");

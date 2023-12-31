@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { createSession, createTokens } from "../../services/auth";
 import { accessTokenConfig, refreshTokenConfig } from "../../config/default";
 import UserModel from "../../models/UserModel";
+import { sendMail } from "../../services/sendMail";
 export const signUp = async (req: Request, res: Response) => {
   const { firstName, lastName, email, password, username } = req.body;
   if (!firstName || !lastName || !email || !password || !username) {
@@ -18,6 +19,12 @@ export const signUp = async (req: Request, res: Response) => {
     lastName,
     password,
     username,
+  });
+
+  //send a verification email
+  await sendMail({
+    type: "welcome",
+    data: { name: user.firstName, to: user.email, url: "", priority: "1" },
   });
   const sessionId = await createSession(user._id, req.get("user-agent") || "");
   const { accessToken, refreshToken } = createTokens(user, sessionId);

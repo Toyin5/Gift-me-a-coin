@@ -73,10 +73,12 @@ const userSchema = new mongoose.Schema(
     verified: {
       type: Boolean,
       default: false,
+      select: false,
     },
     isSuspended: {
       type: Boolean,
       default: false,
+      select: false,
     },
     username: { type: String, required: true, trim: true },
     socials: [socialSchema],

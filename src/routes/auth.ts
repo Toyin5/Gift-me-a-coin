@@ -6,11 +6,12 @@ import {
 } from "../validations/auth";
 import { signUp } from "../controllers";
 import { signin } from "../controllers/auth/signin";
+import { signout } from "../controllers/auth/signout";
 
 const authRouter = Router();
 
 authRouter.post("/login", validateSchema(loginUserValidation), signin);
 authRouter.post("/register", validateSchema(registerUserValidation), signUp);
-// authRouter.delete("/logout", logoutUserHandler);
+authRouter.delete("/logout", signout);
 
 export { authRouter };
