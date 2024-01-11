@@ -22,10 +22,10 @@ export const signUp = async (req: Request, res: Response) => {
   });
 
   //send a verification email
-  await sendMail({
-    type: "welcome",
-    data: { name: user.firstName, to: user.email, url: "", priority: "1" },
-  });
+  // await sendMail({
+  //   type: "welcome",
+  //   data: { name: user.firstName, to: user.email, url: "", priority: "1" },
+  // });
   const sessionId = await createSession(user._id, req.get("user-agent") || "");
   const { accessToken, refreshToken } = createTokens(user, sessionId);
 
