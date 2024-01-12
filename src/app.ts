@@ -19,5 +19,8 @@ app.use(requestsLogger);
 app.use(deserializeUser);
 
 app.use("/v1", routes);
+app.use("/", (req, res) => {
+  res.status(200).json({ message: "Welcome" });
+});
 
 export default app;
