@@ -18,9 +18,9 @@ app.use(mongoSanitize());
 app.use(requestsLogger);
 app.use(deserializeUser);
 
-app.use("/v1", routes);
-app.use("/", (req, res) => {
-  res.status(200).json({ message: "Welcome" });
+app.use("/health", (req, res) => {
+  res.status(200).json({ message: "Breathing... 🌬" });
 });
+app.use("/api/v1", routes);
 
 export default app;

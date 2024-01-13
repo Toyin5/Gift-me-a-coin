@@ -5,14 +5,12 @@ import { createSession, createTokens } from "../../services/auth";
 
 export const signin = async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  console.log(req.body);
   const user = await UserModel.findOne({ email: email }).select(
     "+loginRetries +isSuspended +verified +lastLogin +password"
   );
   if (!user) {
     return res.status(404).json({ err: "User not found" });
   }
-  console.log(user.password);
   const isValidPassword = await user.verifyPassword(password);
 
   if (!isValidPassword) {
