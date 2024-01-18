@@ -5,8 +5,11 @@ import UserModel from "../../models/UserModel";
 // The verify controller will be called when the user clicks on the verification link sent to the user's email address. The verification link will contain the verification token as a query parameter. The verification token will be used to find the user in the database.
 
 export const verify = async (req: Request, res: Response) => {
-  try {
     const { verificationToken } = req.query;
+    if (!verificationToken) {
+      return res.status(400).json({ message: "Invalid verification token" });
+    }
+  try {
 
     const user = await UserModel.findOne({ verificationToken });
 
