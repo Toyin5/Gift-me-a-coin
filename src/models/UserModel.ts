@@ -26,6 +26,7 @@ export interface UserDocument extends mongoose.Document {
     name: string;
     url: string;
   }[];
+  verificationToken: string;
   refreshToken: string;
   photo: string;
   verified: boolean;
@@ -60,6 +61,10 @@ const userSchema = new mongoose.Schema(
       select: false,
     },
     refreshToken: {
+      type: String,
+      select: false,
+    },
+    verificationToken: {
       type: String,
       select: false,
     },
