@@ -13,7 +13,7 @@ const authRouter = Router();
 
 authRouter.post("/login", validateSchema(loginUserValidation), signin);
 authRouter.post("/register", validateSchema(registerUserValidation), signUp);
-authRouter.get("/verify", verify);
+authRouter.post("/verify", verify);
 authRouter.delete("/logout", signout);
 
 export { authRouter };

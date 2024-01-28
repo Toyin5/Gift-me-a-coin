@@ -4,6 +4,8 @@ import { createSession, createTokens } from "../../services/auth";
 import { accessTokenConfig, refreshTokenConfig } from "../../config/default";
 import UserModel from "../../models/UserModel";
 import { sendMail } from "../../services/sendMail";
+import generateToken from "../../helpers/generateToken";
+import verifyModel from "../../models/verifyModel";
 export const signUp = async (req: Request, res: Response) => {
   const { firstName, lastName, email, password, username } = req.body;
   if (!firstName || !lastName || !email || !password || !username) {
@@ -21,10 +23,18 @@ export const signUp = async (req: Request, res: Response) => {
     username,
   });
 
+  const token = generateToken();
+
+  const verify = await verifyModel.create({
+    userId: user._id,
+    token: token,
+
+  });
+
   // send a verification email
   await sendMail({
     type: "welcome",
-    data: { name: user.firstName, to: user.email, url: "", priority: "1" },
+    data: { name: user.firstName, to: user.email, url: token, priority: "1" },
   });
   const sessionId = await createSession(user._id, req.get("user-agent") || "");
   const { accessToken, refreshToken } = createTokens(user, sessionId);
