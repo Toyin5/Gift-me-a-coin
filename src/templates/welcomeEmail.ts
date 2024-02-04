@@ -1,4 +1,4 @@
-export default function welcome(data: { name: string; url: string }) {
+export default function welcome(data: { name: string; token: string }) {
   return `
     <!DOCTYPE html>
     <html>
@@ -46,11 +46,9 @@ export default function welcome(data: { name: string; url: string }) {
       <main>
         <p>Hi ${data.name}</p>
         <p>We just need to verify your email address before you can access <strong>LinktoAll</strong>.</p>
-        <p>To verify your email address, please click on the following link:</p>
-        <button><a href="${
-          data.url
-        }" target="_blank">Verify your email address</a></button>
-        <p>If you don't click on the link within 10 hours, your account will be deleted.</p>
+        <p>This is the verification token</p>
+        <p>${data.token}</p>
+        <p>Note: This token will expired within after 2 hours.</p>
         <p>Thank you for your patience.</p>
       </main>
       <footer>

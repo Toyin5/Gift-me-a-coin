@@ -28,13 +28,12 @@ export const signUp = async (req: Request, res: Response) => {
   const verify = await verifyModel.create({
     userId: user._id,
     token: token,
-
   });
 
   // send a verification email
   await sendMail({
     type: "welcome",
-    data: { name: user.firstName, to: user.email, url: token, priority: "1" },
+    data: { name: user.firstName, to: user.email, token: token, priority: "1" },
   });
   const sessionId = await createSession(user._id, req.get("user-agent") || "");
   const { accessToken, refreshToken } = createTokens(user, sessionId);

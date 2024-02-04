@@ -5,7 +5,7 @@ export interface ICommonFields {
 
 export interface WelcomeEmail extends ICommonFields {
   name: string;
-  url: string;
+  token: string;
 }
 
 export type EmailData = { type: "welcome"; data: WelcomeEmail };
