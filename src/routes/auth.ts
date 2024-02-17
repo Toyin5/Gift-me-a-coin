@@ -3,6 +3,7 @@ import validateSchema from "../middlewares/validate";
 import {
   loginUserValidation,
   registerUserValidation,
+  verifyUserValidation
 } from "../validations/auth";
 import { signUp } from "../controllers";
 import { signin } from "../controllers/auth/signin";
@@ -13,7 +14,7 @@ const authRouter = Router();
 
 authRouter.post("/login", validateSchema(loginUserValidation), signin);
 authRouter.post("/register", validateSchema(registerUserValidation), signUp);
-authRouter.post("/verify", verify);
+authRouter.post("/verify", validateSchema(verifyUserValidation), verify);
 authRouter.delete("/logout", signout);
 
 export { authRouter };

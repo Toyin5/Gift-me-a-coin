@@ -5,6 +5,7 @@ import logger from "../../utils/logger";
 
 export const verify = async (req: Request, res: Response) => {
   const { id, token } = req.body;
+  
 
   try {
     const userExists = await UserModel.findById(id);
