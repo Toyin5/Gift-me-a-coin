@@ -1,4 +1,4 @@
-export default function welcome(data: { name: string; token: string }) {
+export const welcome = (data: any) => {
   return `
     <!DOCTYPE html>
     <html>
@@ -57,4 +57,4 @@ export default function welcome(data: { name: string; token: string }) {
     </body>
     </html>
           `;
-}
+};

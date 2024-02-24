@@ -30,6 +30,10 @@ export interface UserDocument extends mongoose.Document {
   photo: string;
   verified: boolean;
   isSuspended: boolean;
+  passwordResetExpires: Date;
+  passwordResetRetries: number;
+  passwordChangedAt: Date;
+  passwordResetToken: string;
   verifyPassword(candidatePassword: string): Promise<boolean>;
 }
 const userSchema = new mongoose.Schema(
@@ -90,6 +94,23 @@ const userSchema = new mongoose.Schema(
     loginRetries: {
       type: Number,
       default: 0,
+      select: false,
+    },
+    passwordResetToken: {
+      type: String,
+      select: false,
+    },
+    passwordResetExpires: {
+      type: Date,
+      select: false,
+    },
+    passwordResetRetries: {
+      type: Number,
+      default: 0,
+      select: false,
+    },
+    passwordChangedAt: {
+      type: Date,
       select: false,
     },
   },
