@@ -10,6 +10,7 @@ import { signin } from "../controllers/auth/signin";
 import { signout } from "../controllers/auth/signout";
 import { verify } from "../controllers/auth/verify";
 import { forgotPassword } from "../controllers/auth/forgot-password";
+import { resetPassword } from "../controllers/auth/resetPassword";
 
 const authRouter = Router();
 
@@ -17,6 +18,7 @@ authRouter.post("/login", validateSchema(loginUserValidation), signin);
 authRouter.post("/register", validateSchema(registerUserValidation), signUp);
 authRouter.post("/verify", validateSchema(verifyUserValidation), verify);
 authRouter.post("/forgot-password", forgotPassword);
+authRouter.post("/reset-password", resetPassword);
 authRouter.delete("/logout", signout);
 
 export { authRouter };
