@@ -19,17 +19,14 @@ export const signin = async (req: Request, res: Response) => {
     });
     return res.status(401).json({ err: "Incorrect password" });
   }
-  if (!user.verified) {
-    //resend verification email
-    return res
-      .status(401)
-      .json({ err: "Your email address is not yet verified" });
-  }
   if (user.isSuspended) {
     return res.status(403).json({ err: "Your account has been suspended" });
   }
   const sessionId = await createSession(user._id, req.get("user-agent") || "");
-  const { accessToken, refreshToken } = createTokens(user, sessionId);
+  const { accessToken, refreshToken } = createTokens(
+    { id: user._id, verified: user.verified },
+    sessionId
+  );
 
   res.cookie(
     accessTokenConfig.cookieName,
@@ -41,6 +38,12 @@ export const signin = async (req: Request, res: Response) => {
     refreshToken,
     refreshTokenConfig.cookieOptions
   );
+  if (!user.verified) {
+    //resend verification email
+    return res
+      .status(401)
+      .json({ err: "Your email address is not yet verified" });
+  }
   await UserModel.findByIdAndUpdate(user._id, {
     loginRetries: 0,
     lastLogin: Date.now(),

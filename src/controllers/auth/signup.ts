@@ -38,8 +38,10 @@ export const signUp = async (req: Request, res: Response) => {
     data: { name: user.firstName, to: user.email, token: token, priority: "1" },
   });
   const sessionId = await createSession(user._id, req.get("user-agent") || "");
-  const { accessToken, refreshToken } = createTokens(user, sessionId);
-
+  const { accessToken, refreshToken } = createTokens(
+    { id: user._id, verified: user.verified },
+    sessionId
+  );
   res.cookie(
     accessTokenConfig.cookieName,
     accessToken,

@@ -33,7 +33,6 @@ export const registerUserValidation = object({
 
 export const verifyUserValidation = object({
   body: object({
-    id: string({ required_error: "User ID is required" }).uuid("Invalid User ID"),
     token: string({ required_error: "Token is required" }),
   }),
 });

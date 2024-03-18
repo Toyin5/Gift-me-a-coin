@@ -4,9 +4,8 @@ import verifyModel from "../../models/verifyModel";
 import logger from "../../utils/logger";
 
 export const verify = async (req: Request, res: Response) => {
-  const { id, token } = req.body;
-  
-
+  const { token } = req.body;
+  const id = res.locals.user.user.id;
   try {
     const userExists = await UserModel.findById(id);
     if (!userExists) {

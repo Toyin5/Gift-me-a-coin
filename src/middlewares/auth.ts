@@ -10,7 +10,6 @@ export const deserializeUser = async (
 ) => {
   const accessToken = req.cookies[accessTokenConfig.cookieName];
   const refreshToken = req.cookies[refreshTokenConfig.cookieName];
-
   if (!accessToken || !refreshToken) return next();
 
   const { decodedValue, expired } = verifyJwt(accessToken);
@@ -53,7 +52,9 @@ export const authenticateUser = (
   if (!user)
     return res
       .status(401)
-      .send("Authentication required to access this resource.");
+      .send(
+        "Authentication required to access this resource. Pls log in again"
+      );
 
   return next();
 };

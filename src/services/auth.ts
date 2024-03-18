@@ -17,10 +17,7 @@ export const deleteSession = async (sessionId: string) => {
   await SessionModel.findByIdAndDelete(sessionId);
 };
 
-export const createTokens = (
-  user: Omit<UserDocument, "password">,
-  sessionId: string
-) => {
+export const createTokens = (user: object, sessionId: string) => {
   const accessToken = signJwt(
     { user, sessionId },
     { expiresIn: accessTokenConfig.duration }
