@@ -19,6 +19,7 @@ export const verify = async (req: Request, res: Response) => {
     if (!verificationExists) {
       return res.status(404).json({ err: "Invalid Token" });
     }
+    await UserModel.findByIdAndUpdate(id, { verified: true }, { new: true });
     return res.status(200).json({ message: "User verified" });
   } catch (error) {
     logger.error(error);

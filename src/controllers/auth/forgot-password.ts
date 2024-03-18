@@ -28,8 +28,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
         .json({ message: "Exceed number of tries. Account suspended!" });
     }
     const passwordResetToken = generateRandomString();
-    const url = new URL(process.env.SERVER_URI!);
-    url.pathname = `reset-password?token=${passwordResetToken}`;
+    const url = `${process.env.SERVER_URI}/reset-password?token=${passwordResetToken}`;
     await UserModel.findByIdAndUpdate(user._id, {
       passwordResetToken: passwordResetToken,
       passwordResetExpires: DateTime.now().plus({ minutes: 15 }).toJSDate(),
@@ -43,7 +42,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
       data: {
         name: user.firstName,
         to: user.email,
-        url: url.host,
+        url: url,
         priority: "1",
       },
     });

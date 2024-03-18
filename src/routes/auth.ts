@@ -23,8 +23,8 @@ authRouter.post(
   authenticateUser,
   verify
 );
-authRouter.post("/forgot-password", forgotPassword);
-authRouter.post("/reset-password", resetPassword);
-authRouter.delete("/logout", signout);
+authRouter.post("/forgot-password", authenticateUser, forgotPassword);
+authRouter.post("/reset-password", authenticateUser, resetPassword);
+authRouter.delete("/logout", authenticateUser, signout);
 
 export { authRouter };
