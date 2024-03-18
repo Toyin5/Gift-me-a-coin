@@ -2,6 +2,9 @@ import { Request, Response } from "express";
 import UserModel from "../../models/UserModel";
 import { accessTokenConfig, refreshTokenConfig } from "../../config/default";
 import { createSession, createTokens } from "../../services/auth";
+import { sendMail } from "../../services/sendMail";
+import generateToken from "../../helpers/generateToken";
+import verifyModel from "../../models/verifyModel";
 
 export const signin = async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -40,6 +43,21 @@ export const signin = async (req: Request, res: Response) => {
   );
   if (!user.verified) {
     //resend verification email
+    const token = generateToken();
+
+    await verifyModel.create({
+      userId: user._id,
+      token: token,
+    });
+    await sendMail({
+      type: "welcome",
+      data: {
+        name: user.firstName,
+        to: user.email,
+        token: token,
+        priority: "1",
+      },
+    });
     return res
       .status(401)
       .json({ err: "Your email address is not yet verified" });
