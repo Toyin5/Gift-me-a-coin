@@ -40,19 +40,18 @@ export const welcome = (data: any) => {
     </head>
     <body>
       <header>
-        <img src="https://res.cloudinary.com/dr5nmuou0/image/upload/v1690045358/randoms/logo_equxxx.png" alt="logo" />
         <h1>Verify your email address</h1>
       </header>
       <main>
         <p>Hi ${data.name}</p>
-        <p>We just need to verify your email address before you can access <strong>LinktoAll</strong>.</p>
+        <p>We just need to verify your email address before you can access <strong>Gift-me-a-coin</strong>.</p>
         <p>This is the verification token</p>
         <p>${data.token}</p>
         <p>Note: This token will expired within after 2 hours.</p>
         <p>Thank you for your patience.</p>
       </main>
       <footer>
-        <p>Copyright &copy; ${new Date().getFullYear()} <strong>LinkToAll</strong></p>
+        <p>Copyright &copy; ${new Date().getFullYear()} <strong>Gift-me-a-coin</strong></p>
       </footer>
     </body>
     </html>

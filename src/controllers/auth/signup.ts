@@ -13,7 +13,9 @@ export const signUp = async (req: Request, res: Response) => {
   }
   const userExists = await UserModel.findOne({ email: email });
   if (userExists) {
-    return res.status(409).json({ err: "User with email already exists" });
+    return res
+      .status(409)
+      .json({ status: 409, error: "User with email already exists" });
   }
   const user = await UserModel.create({
     email,
@@ -25,7 +27,7 @@ export const signUp = async (req: Request, res: Response) => {
 
   const token = generateToken();
 
-  const verify = await verifyModel.create({
+  await verifyModel.create({
     userId: user._id,
     token: token,
   });
@@ -50,6 +52,7 @@ export const signUp = async (req: Request, res: Response) => {
   );
 
   return res.status(201).json({
+    status: 201,
     message: "Registration successful",
   });
 };
