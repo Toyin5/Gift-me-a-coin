@@ -4,6 +4,8 @@ import {
   loginUserValidation,
   registerUserValidation,
   verifyUserValidation,
+  forgotPasswordValidation,
+  resetPasswordValidation,
 } from "../validations/auth";
 import { signUp } from "../controllers";
 import { signin } from "../controllers/auth/signin";
@@ -23,8 +25,8 @@ authRouter.post(
   authenticateUser,
   verify
 );
-authRouter.post("/forgot-password", authenticateUser, forgotPassword);
-authRouter.post("/reset-password", authenticateUser, resetPassword);
+authRouter.post("/forgot-password",validateSchema(forgotPasswordValidation), authenticateUser, forgotPassword);
+authRouter.post("/reset-password", validateSchema(resetPasswordValidation), authenticateUser, resetPassword);
 authRouter.delete("/logout", authenticateUser, signout);
 
 export { authRouter };
